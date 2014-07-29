@@ -15,15 +15,15 @@ class IssueReadsController < ApplicationController
         ajax_counter_respond(num_issues)
         return
       end
-    end
 
-    case params[:req]
-      when 'assigned'
-        num_issues = query.issues.count
-      when 'unread'
-        num_issues = query.issues(conditions: "#{IssueRead.table_name}.read_date is null").count
-      when 'updated'
-        num_issues = query.issues(conditions: "#{IssueRead.table_name}.read_date < #{Issue.table_name}.updated_on").count
+      case params[:req]
+        when 'assigned'
+          num_issues = query.issues.count
+        when 'unread'
+          num_issues = query.issues(conditions: "#{IssueRead.table_name}.read_date is null").count
+        when 'updated'
+          num_issues = query.issues(conditions: "#{IssueRead.table_name}.read_date < #{Issue.table_name}.updated_on").count
+      end
     end
     # save counter to prevent extra ajax request
 
